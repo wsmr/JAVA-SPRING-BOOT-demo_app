@@ -18,7 +18,7 @@ public class Branch extends Bank {
         return ("Bank Amount is " + amount);
     }
 
-    public void activity(String type, double val) {
+    public void activity(String type, final double val) {
 
         switch (type) {
             case WITHDRAWAL:
