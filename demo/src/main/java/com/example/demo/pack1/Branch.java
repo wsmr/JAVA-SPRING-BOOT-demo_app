@@ -1,11 +1,18 @@
 package com.example.demo.pack1;
-
-
 import static com.example.demo.pack1.ActivityTypes.*;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class Branch extends Bank {
 
-    private String name;
+    private String name;    // Lombok @Data will generate getters, setters, toString, equals, hashCode
     private String manager;
 
 //    @Override

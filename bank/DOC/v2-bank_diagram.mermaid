@@ -1,0 +1,405 @@
+classDiagram
+    %% Abstract Base Classes and Interfaces
+    class Person {
+        <<abstract>>
+        #personId: String
+        #firstName: String
+        #lastName: String
+        #dateOfBirth: Date
+        #address: Address
+        #contactInfo: ContactInfo
+        +getFullName(): String
+        +getAge(): Integer
+        +updateAddress(address: Address): void
+        +validatePerson(): Boolean*
+    }
+
+    class ITransactionProcessor {
+        <<interface>>
+        +processTransaction(transaction: Transaction): TransactionResult
+        +validateTransaction(transaction: Transaction): Boolean
+        +calculateFees(transaction: Transaction): Double
+    }
+
+    class INotificationService {
+        <<interface>>
+        +sendNotification(message: String, recipient: Person): void
+        +sendTransactionAlert(transaction: Transaction): void
+    }
+
+    class IAuthenticationService {
+        <<interface>>
+        +authenticate(credentials: Credentials): AuthResult
+        +authorize(user: User, action: String): Boolean
+        +createSession(user: User): Session
+    }
+
+    %% Enhanced Bank Class with Singleton Pattern
+    class Bank {
+        -instance: Bank
+        -bankId: String
+        -bankName: String
+        -bankCode: String
+        -headquarters: Address
+        -establishedDate: Date
+        -branches: List~Branch~
+        -bankingRegulations: BankingRegulations
+        -Bank()
+        +getInstance(): Bank
+        +addBranch(branch: Branch): void
+        +removeBranch(branchId: String): Boolean
+        +findBranch(branchId: String): Branch
+        +getBranches(): List~Branch~
+        +getTotalAssets(): Double
+        +generateBankReport(): BankReport
+    }
+
+    %% Enhanced Person Hierarchy
+    class Customer {
+        -customerId: String
+        -customerType: CustomerType
+        -creditScore: Integer
+        -accounts: List~Account~
+        -customerSince: Date
+        -loyaltyPoints: Integer
+        -riskLevel: RiskLevel
+        +openAccount(accountType: Class, initialDeposit: Double): Account
+        +closeAccount(accountId: String): Boolean
+        +transferMoney(fromAccount: String, toAccount: String, amount: Double): TransactionResult
+        +getAccountsByType(type: Class): List~Account~
+        +calculateTotalBalance(): Double
+        +upgradeCustomerType(): Boolean
+        +validatePerson(): Boolean
+    }
+
+    class BankEmployee {
+        <<abstract>>
+        -employeeId: String
+        -department: Department
+        -position: Position
+        -salary: Double
+        -hireDate: Date
+        -permissions: Set~Permission~
+        -supervisor: BankEmployee
+        -subordinates: List~BankEmployee~
+        +login(credentials: Credentials): Session
+        +processCustomerRequest(request: CustomerRequest): RequestResult
+        +generateReport(): EmployeeReport
+        +validatePerson(): Boolean
+        +hasPermission(permission: Permission): Boolean*
+    }
+
+    class Teller {
+        -windowNumber: Integer
+        -dailyTransactionLimit: Double
+        -transactionsProcessed: List~Transaction~
+        +processDeposit(account: Account, amount: Double): TransactionResult
+        +processWithdrawal(account: Account, amount: Double): TransactionResult
+        +issueCashierCheck(amount: Double, payee: String): Check
+        +balanceDrawer(): DrawerBalance
+        +hasPermission(permission: Permission): Boolean
+    }
+
+    class BranchManager {
+        -branchId: String
+        -managedBranch: Branch
+        -budgetAuthority: Double
+        +approveLoan(loanApplication: LoanApplication): Boolean
+        +hireTeller(teller: Teller): Boolean
+        +generateBranchReport(): BranchReport
+        +handleEscalation(issue: CustomerIssue): Resolution
+        +hasPermission(permission: Permission): Boolean
+    }
+
+    class LoanOfficer {
+        -loanPortfolio: List~Loan~
+        -approvalLimit: Double
+        +evaluateLoanApplication(application: LoanApplication): LoanDecision
+        +calculateInterestRate(customer: Customer, loanType: LoanType): Double
+        +monitorLoanPerformance(): LoanPortfolioReport
+        +hasPermission(permission: Permission): Boolean
+    }
+
+    %% Enhanced Account Hierarchy with Strategy Pattern
+    class Account {
+        <<abstract>>
+        #accountId: String
+        #accountNumber: String
+        #balance: Double
+        #currency: Currency
+        #openDate: Date
+        #lastTransactionDate: Date
+        #status: AccountStatus
+        #owner: Customer
+        #transactionHistory: List~Transaction~
+        #interestCalculator: IInterestCalculator
+        #feeCalculator: IFeeCalculator
+        +deposit(amount: Double): TransactionResult
+        +withdraw(amount: Double): TransactionResult*
+        +transfer(toAccount: Account, amount: Double): TransactionResult
+        +getBalance(): Double
+        +getTransactionHistory(dateRange: DateRange): List~Transaction~
+        +calculateInterest(): Double
+        +applyFees(): Double
+        +freeze(): void
+        +unfreeze(): void
+        +close(): Boolean*
+        +validateTransaction(transaction: Transaction): Boolean*
+    }
+
+    class SavingsAccount {
+        -interestRate: Double
+        -minimumBalance: Double
+        -withdrawalLimit: Integer
+        -withdrawalsThisMonth: Integer
+        +withdraw(amount: Double): TransactionResult
+        +calculateInterest(): Double
+        +applyInterest(): TransactionResult
+        +checkWithdrawalLimit(): Boolean
+        +close(): Boolean
+        +validateTransaction(transaction: Transaction): Boolean
+    }
+
+    class CheckingAccount {
+        -overdraftLimit: Double
+        -monthlyFee: Double
+        -freeTransactionsLimit: Integer
+        -checksIssued: List~Check~
+        +withdraw(amount: Double): TransactionResult
+        +issueCheck(amount: Double, payee: String): Check
+        +calculateOverdraftFee(): Double
+        +chargeMonthlyFee(): TransactionResult
+        +close(): Boolean
+        +validateTransaction(transaction: Transaction): Boolean
+    }
+
+    class BusinessAccount {
+        -businessLicense: String
+        -dailyTransactionLimit: Double
+        -merchantServices: List~MerchantService~
+        +processBusinessTransaction(transaction: BusinessTransaction): TransactionResult
+        +generateBusinessReport(): BusinessAccountReport
+        +withdraw(amount: Double): TransactionResult
+        +close(): Boolean
+        +validateTransaction(transaction: Transaction): Boolean
+    }
+
+    %% Strategy Pattern for Interest and Fee Calculation
+    class IInterestCalculator {
+        <<interface>>
+        +calculateInterest(account: Account, period: TimePeriod): Double
+        +getInterestRate(account: Account): Double
+    }
+
+    class IFeeCalculator {
+        <<interface>>
+        +calculateTransactionFee(transaction: Transaction): Double
+        +calculateMaintenanceFee(account: Account): Double
+        +calculateOverdraftFee(amount: Double): Double
+    }
+
+    class SimpleInterestCalculator {
+        +calculateInterest(account: Account, period: TimePeriod): Double
+        +getInterestRate(account: Account): Double
+    }
+
+    class CompoundInterestCalculator {
+        -compoundingFrequency: CompoundingFrequency
+        +calculateInterest(account: Account, period: TimePeriod): Double
+        +getInterestRate(account: Account): Double
+    }
+
+    class TieredFeeCalculator {
+        -feeSchedule: Map~String, Double~
+        +calculateTransactionFee(transaction: Transaction): Double
+        +calculateMaintenanceFee(account: Account): Double
+        +calculateOverdraftFee(amount: Double): Double
+    }
+
+    %% Enhanced Transaction with Command Pattern
+    class Transaction {
+        <<abstract>>
+        #transactionId: String
+        #transactionType: TransactionType
+        #amount: Double
+        #currency: Currency
+        #timestamp: DateTime
+        #description: String
+        #status: TransactionStatus
+        #fees: Double
+        #authorizationCode: String
+        +execute(): TransactionResult*
+        +undo(): TransactionResult*
+        +validate(): Boolean*
+        +calculateFees(): Double*
+        +getAuditTrail(): AuditTrail
+    }
+
+    class DepositTransaction {
+        -sourceType: DepositSource
+        -depositSlipNumber: String
+        +execute(): TransactionResult
+        +undo(): TransactionResult
+        +validate(): Boolean
+        +calculateFees(): Double
+    }
+
+    class WithdrawalTransaction {
+        -withdrawalMethod: WithdrawalMethod
+        -atmLocation: String
+        +execute(): TransactionResult
+        +undo(): TransactionResult
+        +validate(): Boolean
+        +calculateFees(): Double
+    }
+
+    class TransferTransaction {
+        -fromAccount: Account
+        -toAccount: Account
+        -transferType: TransferType
+        +execute(): TransactionResult
+        +undo(): TransactionResult
+        +validate(): Boolean
+        +calculateFees(): Double
+    }
+
+    %% Observer Pattern for Notifications
+    class NotificationService {
+        -observers: List~INotificationObserver~
+        +addObserver(observer: INotificationObserver): void
+        +removeObserver(observer: INotificationObserver): void
+        +notifyObservers(event: BankingEvent): void
+        +sendNotification(message: String, recipient: Person): void
+        +sendTransactionAlert(transaction: Transaction): void
+    }
+
+    class INotificationObserver {
+        <<interface>>
+        +update(event: BankingEvent): void
+    }
+
+    class EmailNotification {
+        -emailService: EmailService
+        +update(event: BankingEvent): void
+        +sendEmail(recipient: String, subject: String, body: String): void
+    }
+
+    class SMSNotification {
+        -smsService: SMSService
+        +update(event: BankingEvent): void
+        +sendSMS(phoneNumber: String, message: String): void
+    }
+
+    %% Value Objects and Enums
+    class Address {
+        +street: String
+        +city: String
+        +state: String
+        +zipCode: String
+        +country: String
+        +toString(): String
+        +validate(): Boolean
+    }
+
+    class ContactInfo {
+        +email: String
+        +phoneNumber: String
+        +alternatePhone: String
+        +preferredContact: ContactMethod
+        +validate(): Boolean
+    }
+
+    class TransactionResult {
+        +success: Boolean
+        +resultCode: String
+        +message: String
+        +transactionId: String
+        +balance: Double
+        +timestamp: DateTime
+    }
+
+    class CustomerType {
+        <<enumeration>>
+        BASIC
+        PREMIUM
+        VIP
+        BUSINESS
+    }
+
+    class AccountStatus {
+        <<enumeration>>
+        ACTIVE
+        INACTIVE
+        FROZEN
+        CLOSED
+        SUSPENDED
+    }
+
+    class TransactionType {
+        <<enumeration>>
+        DEPOSIT
+        WITHDRAWAL
+        TRANSFER
+        FEE
+        INTEREST
+        LOAN_PAYMENT
+        CHECK_PAYMENT
+    }
+
+    class TransactionStatus {
+        <<enumeration>>
+        PENDING
+        COMPLETED
+        FAILED
+        CANCELLED
+        PROCESSING
+    }
+
+    %% Factory Pattern for Account Creation
+    class AccountFactory {
+        <<abstract>>
+        +createAccount(type: AccountType, customer: Customer, initialDeposit: Double): Account*
+        +validateAccountCreation(customer: Customer, accountType: AccountType): Boolean
+    }
+
+    class SavingsAccountFactory {
+        +createAccount(type: AccountType, customer: Customer, initialDeposit: Double): Account
+    }
+
+    class CheckingAccountFactory {
+        +createAccount(type: AccountType, customer: Customer, initialDeposit: Double): Account
+    }
+
+    %% Relationships - Inheritance
+    Person <|-- Customer
+    Person <|-- BankEmployee
+    BankEmployee <|-- Teller
+    BankEmployee <|-- BranchManager
+    BankEmployee <|-- LoanOfficer
+    Account <|-- SavingsAccount
+    Account <|-- CheckingAccount
+    Account <|-- BusinessAccount
+    Transaction <|-- DepositTransaction
+    Transaction <|-- WithdrawalTransaction
+    Transaction <|-- TransferTransaction
+    IInterestCalculator <|.. SimpleInterestCalculator
+    IInterestCalculator <|.. CompoundInterestCalculator
+    IFeeCalculator <|.. TieredFeeCalculator
+    INotificationObserver <|.. EmailNotification
+    INotificationObserver <|.. SMSNotification
+    AccountFactory <|-- SavingsAccountFactory
+    AccountFactory <|-- CheckingAccountFactory
+
+    %% Associations
+    Bank "1" --> "1..*" Branch : manages
+    Branch "1" --> "1..*" BankEmployee : employs
+    Branch "1" --> "0..*" Customer : serves
+    Customer "1" --> "0..*" Account : owns
+    Account "1" --> "0..*" Transaction : has
+    Account "1" --> "1" IInterestCalculator : uses
+    Account "1" --> "1" IFeeCalculator : uses
+    BankEmployee "1" --> "0..*" Transaction : processes
+    Customer "1" --> "1" Address : lives_at
+    Customer "1" --> "1" ContactInfo : has
+    NotificationService "1" --> "0..*" INotificationObserver : notifies
+    Transaction "1" --> "1" TransactionResult : produces

@@ -1,0 +1,115 @@
+classDiagram
+    class Bank {
+        -bankId: String
+        -bankName: String
+        -headquarters: String
+        -establishedDate: Date
+        +addBranch(branch: Branch): void
+        +removeBranch(branchId: String): void
+        +getBranches(): List~Branch~
+    }
+
+    class Branch {
+        -branchId: String
+        -branchName: String
+        -address: String
+        -phoneNumber: String
+        -manager: BankStaff
+        +addStaff(staff: BankStaff): void
+        +removeStaff(staffId: String): void
+        +getStaff(): List~BankStaff~
+    }
+
+    class BankStaff {
+        -staffId: String
+        -firstName: String
+        -lastName: String
+        -position: String
+        -salary: Double
+        -hireDate: Date
+        -email: String
+        +processTransaction(transaction: Transaction): void
+        +helpCustomer(customer: Customer): void
+    }
+
+    class Customer {
+        -customerId: String
+        -firstName: String
+        -lastName: String
+        -dateOfBirth: Date
+        -address: String
+        -phoneNumber: String
+        -email: String
+        -customerSince: Date
+        +openAccount(accountType: String): Account
+        +closeAccount(accountId: String): void
+        +getAccounts(): List~Account~
+    }
+
+    class Account {
+        <<abstract>>
+        -accountId: String
+        -accountNumber: String
+        -balance: Double
+        -openDate: Date
+        -status: AccountStatus
+        +deposit(amount: Double): void
+        +withdraw(amount: Double): void
+        +getBalance(): Double
+        +getTransactionHistory(): List~Transaction~
+    }
+
+    class SavingsAccount {
+        -interestRate: Double
+        -minimumBalance: Double
+        +calculateInterest(): Double
+        +applyInterest(): void
+    }
+
+    class CheckingAccount {
+        -overdraftLimit: Double
+        -monthlyFee: Double
+        +processCheck(checkAmount: Double): void
+        +chargeMonthlyFee(): void
+    }
+
+    class Transaction {
+        -transactionId: String
+        -transactionType: TransactionType
+        -amount: Double
+        -date: DateTime
+        -description: String
+        -fromAccount: Account
+        -toAccount: Account
+        +process(): void
+        +reverse(): void
+    }
+
+    class AccountStatus {
+        <<enumeration>>
+        ACTIVE
+        INACTIVE
+        FROZEN
+        CLOSED
+    }
+
+    class TransactionType {
+        <<enumeration>>
+        DEPOSIT
+        WITHDRAWAL
+        TRANSFER
+        FEE
+        INTEREST
+    }
+
+    %% Relationships
+    Bank "1" --> "0..*" Branch : has
+    Branch "1" --> "0..*" BankStaff : employs
+    Branch "1" --> "0..*" Customer : serves
+    Customer "1" --> "0..*" Account : owns
+    Account "1" --> "0..*" Transaction : has
+    Account <|-- SavingsAccount
+    Account <|-- CheckingAccount
+    BankStaff "1" --> "0..*" Transaction : processes
+    Account --> AccountStatus : uses
+    Transaction --> TransactionType : uses

@@ -1,0 +1,121 @@
+What is a Class Diagram?
+A class diagram is like a blueprint that shows how different parts of a system work together. Think of it as a map of a building showing all the rooms and how they connect.
+Real-World Banking System Analogy
+Imagine you walk into a bank. Here's what you see:
+1. Bank (The Main Organization)
+
+This is like "ABC Bank" or "XYZ Bank"
+It has properties like:
+
+bankId: A unique number (like "BANK001")
+bankName: The bank's name (like "City Bank")
+headquarters: Where the main office is
+establishedDate: When the bank was founded
+
+
+
+2. Branch (Individual Bank Locations)
+
+Each bank has multiple branches (like downtown branch, mall branch)
+Each branch has:
+
+branchId: Unique branch number
+address: Where it's located
+phoneNumber: Contact number
+manager: Who runs this branch
+
+
+
+3. BankStaff (Employees)
+
+These are the people working at each branch:
+
+Tellers, managers, customer service representatives
+Each has staffId, firstName, lastName, position, salary
+They can help customers and process transactions
+
+
+
+4. Customer (Bank Clients)
+
+People like you and me who use the bank
+Each customer has personal info: name, address, phone, email
+
+customerSince: When they first joined the bank
+
+
+
+5. Account (Where Money is Stored)
+
+This is where customers keep their money
+Has accountNumber, balance, openDate
+Abstract class: You can't have just an "Account" - it must be a specific type
+
+6. SavingsAccount & CheckingAccount (Types of Accounts)
+
+SavingsAccount: For saving money, earns interest
+
+Has interestRate and minimumBalance
+
+
+CheckingAccount: For daily transactions, can write checks
+
+Has overdraftLimit (how much you can overdraw)
+
+
+
+7. Transaction (Money Movement Records)
+
+Every time money moves, it creates a transaction record
+Includes: amount, date, description, which accounts involved
+
+Understanding the Symbols
+Attributes (Properties):
+
+- (minus): Private (only that class can access)
++ (plus): Public (anyone can access)
+Example: -bankId: String means bankId is private and stores text
+
+Methods (Actions):
+
+These are things the class can do
+Example: +deposit(amount: Double): void means you can deposit money
+
+Relationships (How Classes Connect):
+
+"1" --> "0..*": One-to-Many relationship
+
+One Bank has zero or more Branches
+One Customer can have zero or more Accounts
+
+
+<|--: Inheritance (IS-A relationship)
+
+SavingsAccount IS-A type of Account
+CheckingAccount IS-A type of Account
+
+
+-->: Association (USES relationship)
+
+Account uses AccountStatus to know if it's active/frozen
+
+
+
+How It All Works Together
+
+ABC Bank has multiple branches (downtown, suburb, mall)
+Each branch employs several staff members
+Customers visit branches to do banking
+Each customer can have multiple accounts (savings, checking)
+Every time money moves, a transaction is recorded
+Staff help process these transactions
+
+Example Scenario:
+
+John (Customer) goes to Downtown Branch
+He wants to deposit $500 into his Savings Account
+Mary (Bank Staff) helps him
+The system creates a Transaction record
+John's account balance increases by $500
+
+This diagram helps programmers understand how to build a banking software system by showing what information each part needs and how they interact with each other!
