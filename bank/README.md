@@ -2,6 +2,31 @@
 
 ```
 banking-system/
+├── .github/                          # GitHub-specific configurations
+├── .gitignore                        # Git ignore rules
+├── README.md                         # Project documentation
+├── CHANGELOG.md                      # Version change history
+├── CONTRIBUTING.md                   # Contribution guidelines
+├── LICENSE                           # Software license
+├── .env.example                      # Environment variables template
+├── build.gradle                      # Gradle build configuration
+├── gradle.properties                 # Gradle properties
+├── gradlew                          # Gradle wrapper script (Unix)
+├── gradlew.bat                      # Gradle wrapper script (Windows)
+├── settings.gradle                   # Gradle settings
+├── docker/                          # Docker-related files
+├── docs/                            # Project documentation
+├── scripts/                         # Utility scripts
+├── gradle/                          # Gradle wrapper files
+└── src/                             # Source code directory
+    ├── main/                        # Main application code
+    │   ├── java/                    # Java source files
+    │   └── resources/               # Configuration & static files
+    └── test/                        # Test code
+        ├── java/                    # Test source files
+        └── resources/               # Test configuration files
+
+banking-system/
 │
 ├── src/
 │   ├── main/

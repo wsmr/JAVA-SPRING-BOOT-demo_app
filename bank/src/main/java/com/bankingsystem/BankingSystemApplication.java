@@ -13,8 +13,19 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * Main Spring Boot application class.
+ * Entry point for the Banking System application.
+ *
+ * Enables:
+ * - JPA Auditing for automatic entity timestamps
+ * - Caching for improved performance
+ * - Asynchronous processing capabilities
+ * - Scheduled task execution
+ * - Transaction management
+ */
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
 @EnableCaching
 @EnableAsync
 @EnableScheduling
