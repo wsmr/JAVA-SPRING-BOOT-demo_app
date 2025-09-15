@@ -1,0 +1,83 @@
+component diagram for the banking system that shows:
+🏗️ Component Architecture Overview:
+📱 External Interfaces Layer:
+
+Mobile App, Web Portal, ATM Network - User-facing applications
+Admin Panel - Management interface
+Third Party Services - External integrations
+
+🚪 Entry Layer:
+
+Load Balancer - Distributes traffic across multiple instances
+API Gateway - Single entry point for all API requests
+Security Filter - Authentication and authorization
+
+🎮 Presentation Layer (Controllers):
+
+Account, Customer, Transaction Controllers - Handle HTTP requests
+Auth, Employee, Report Controllers - Specialized endpoints
+Notification Controller - Manages communication
+
+🧠 Business Logic Layer:
+
+Core Services - Main business operations
+Specialized Services - Interest, fees, audit, risk, compliance
+Factory Components - Create objects using factory pattern
+Strategy Components - Interchangeable algorithms
+
+💾 Data Access Layer:
+
+Repository Layer - Standard CRUD operations
+Custom Repositories - Complex queries and specifications
+JPA Integration - Object-relational mapping
+
+🏛️ Domain Model Layer:
+
+Entity Hierarchies - Person, Account, Transaction inheritance
+Security Entities - User, Role, Permission management
+Value Objects - Immutable business data containers
+
+🔒 Security Layer:
+
+JWT Token Management - Authentication tokens
+Authorization Services - Permission checking
+User Details Service - Spring Security integration
+
+🔧 Infrastructure Layer:
+
+Databases - PostgreSQL primary, Redis cache
+Message Queue - Asynchronous processing
+Monitoring - Logging, metrics, health checks
+Configuration - Environment-specific settings
+
+⚡ Event Processing Layer:
+
+Event Listeners - Handle domain events
+Notification Observers - Observer pattern implementation
+Message Brokers - Event distribution
+
+🔄 Key Component Relationships:
+Data Flow:
+
+External requests → Load Balancer → API Gateway → Security Filter
+Controllers receive filtered requests → call Services
+Services implement business logic → access Repositories
+Repositories interact with Database → return data
+Events are published → processed by Listeners → trigger Actions
+
+Cross-Cutting Concerns:
+
+Security filters all requests and protects resources
+Caching improves performance at service level
+Logging & Monitoring tracks all component interactions
+Event System enables loose coupling between components
+
+Design Patterns Visible:
+
+Layered Architecture - Clear separation of concerns
+Factory Pattern - Object creation components
+Strategy Pattern - Pluggable algorithms
+Observer Pattern - Event-driven notifications
+Repository Pattern - Data access abstraction
+
+This component diagram provides a complete view of how all the code files we created fit together in the overall system architecture, showing both the static structure and the dynamic relationships between components.

@@ -1,0 +1,91 @@
+graph TB
+    subgraph "Banking System"
+        subgraph "Presentation Layer"
+            WebUI[Web Interface]
+            MobileApp[Mobile App]
+            ATM[ATM Interface]
+        end
+        
+        subgraph "Service Layer"
+            BankMgmt[Bank Management Service]
+            CustomerSvc[Customer Service]
+            AccountSvc[Account Service]
+            TransactionSvc[Transaction Service]
+            StaffSvc[Staff Service]
+        end
+        
+        subgraph "Core Business Layer"
+            BankCore[Bank Core]
+            BranchCore[Branch Core]
+            AccountCore[Account Core]
+            TransactionCore[Transaction Core]
+        end
+        
+        subgraph "Data Layer"
+            BankRepo[Bank Repository]
+            CustomerRepo[Customer Repository]
+            AccountRepo[Account Repository]
+            TransactionRepo[Transaction Repository]
+            StaffRepo[Staff Repository]
+        end
+        
+        subgraph "External Systems"
+            PaymentGW[Payment Gateway]
+            CreditBureau[Credit Bureau]
+            RegulatoryAPI[Regulatory Reporting API]
+            NotificationSvc[Notification Service]
+        end
+        
+        subgraph "Shared Components"
+            AuthSvc[Authentication Service]
+            AuditSvc[Audit Service]
+            ValidationSvc[Validation Service]
+            ConfigMgmt[Configuration Management]
+        end
+    end
+    
+    %% Presentation to Service Layer
+    WebUI --> BankMgmt
+    WebUI --> CustomerSvc
+    WebUI --> AccountSvc
+    WebUI --> TransactionSvc
+    
+    MobileApp --> CustomerSvc
+    MobileApp --> AccountSvc
+    MobileApp --> TransactionSvc
+    
+    ATM --> AccountSvc
+    ATM --> TransactionSvc
+    
+    %% Service to Core Layer
+    BankMgmt --> BankCore
+    BankMgmt --> BranchCore
+    CustomerSvc --> AccountCore
+    AccountSvc --> AccountCore
+    TransactionSvc --> TransactionCore
+    StaffSvc --> BranchCore
+    
+    %% Core to Data Layer
+    BankCore --> BankRepo
+    BranchCore --> BankRepo
+    BranchCore --> StaffRepo
+    AccountCore --> CustomerRepo
+    AccountCore --> AccountRepo
+    TransactionCore --> TransactionRepo
+    
+    %% Service Layer Dependencies
+    CustomerSvc --> AuthSvc
+    AccountSvc --> ValidationSvc
+    TransactionSvc --> AuditSvc
+    BankMgmt --> AuthSvc
+    
+    %% External Integrations
+    TransactionSvc --> PaymentGW
+    CustomerSvc --> CreditBureau
+    BankMgmt --> RegulatoryAPI
+    TransactionSvc --> NotificationSvc
+    
+    %% Cross-cutting Dependencies
+    AccountSvc --> ConfigMgmt
+    TransactionSvc --> ConfigMgmt
+    CustomerSvc --> NotificationSvc

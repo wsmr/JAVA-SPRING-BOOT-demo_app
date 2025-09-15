@@ -1,0 +1,383 @@
+graph TB
+    %% External Systems and Users
+    subgraph "External Interfaces"
+        MobileApp[Mobile Banking App]
+        WebPortal[Web Banking Portal]
+        ATM[ATM Network]
+        AdminPanel[Admin Panel]
+        ThirdParty[Third Party Services]
+    end
+
+    %% API Gateway and Load Balancer
+    subgraph "Entry Layer"
+        LoadBalancer[Load Balancer]
+        APIGateway[API Gateway]
+        SecurityFilter[Security Filter]
+    end
+
+    %% Controller Layer
+    subgraph "Presentation Layer"
+        AccountController[Account Controller]
+        CustomerController[Customer Controller]
+        TransactionController[Transaction Controller]
+        AuthController[Authentication Controller]
+        EmployeeController[Employee Controller]
+        ReportController[Report Controller]
+        NotificationController[Notification Controller]
+    end
+
+    %% Service Layer
+    subgraph "Business Logic Layer"
+        subgraph "Core Services"
+            AccountService[Account Service]
+            CustomerService[Customer Service]
+            TransactionService[Transaction Service]
+            AuthService[Authentication Service]
+            NotificationService[Notification Service]
+            ReportService[Report Service]
+        end
+        
+        subgraph "Specialized Services"
+            InterestService[Interest Calculation Service]
+            FeeService[Fee Calculation Service]
+            AuditService[Audit Service]
+            RiskService[Risk Assessment Service]
+            ComplianceService[Compliance Service]
+        end
+        
+        subgraph "Factory Components"
+            AccountFactory[Account Factory]
+            TransactionFactory[Transaction Factory]
+            NotificationFactory[Notification Factory]
+        end
+        
+        subgraph "Strategy Components"
+            InterestStrategy[Interest Calculation Strategy]
+            FeeStrategy[Fee Calculation Strategy]
+            NotificationStrategy[Notification Strategy]
+        end
+    end
+
+    %% Data Access Layer
+    subgraph "Data Access Layer"
+        subgraph "Repository Layer"
+            AccountRepo[Account Repository]
+            CustomerRepo[Customer Repository]
+            TransactionRepo[Transaction Repository]
+            UserRepo[User Repository]
+            AuditRepo[Audit Repository]
+        end
+        
+        subgraph "Custom Repositories"
+            CustomAccountRepo[Custom Account Queries]
+            CustomTransactionRepo[Custom Transaction Queries]
+            SpecificationRepo[JPA Specifications]
+        end
+    end
+
+    %% Entity Layer
+    subgraph "Domain Model Layer"
+        subgraph "Person Hierarchy"
+            Person[Person Entity]
+            Customer[Customer Entity]
+            BankEmployee[Bank Employee Entity]
+            Teller[Teller Entity]
+            BranchManager[Branch Manager Entity]
+        end
+        
+        subgraph "Account Hierarchy"
+            Account[Account Entity]
+            SavingsAccount[Savings Account Entity]
+            CheckingAccount[Checking Account Entity]
+            BusinessAccount[Business Account Entity]
+        end
+        
+        subgraph "Transaction Hierarchy"
+            Transaction[Transaction Entity]
+            DepositTxn[Deposit Transaction]
+            WithdrawalTxn[Withdrawal Transaction]
+            TransferTxn[Transfer Transaction]
+        end
+        
+        subgraph "Security Entities"
+            User[User Entity]
+            Role[Role Entity]
+            Permission[Permission Entity]
+        end
+        
+        subgraph "Value Objects"
+            Address[Address VO]
+            ContactInfo[Contact Info VO]
+            Money[Money VO]
+            TransactionResult[Transaction Result VO]
+            AuditTrail[Audit Trail VO]
+        end
+    end
+
+    %% Security Layer
+    subgraph "Security Layer"
+        JWTProvider[JWT Token Provider]
+        AuthFilter[Authentication Filter]
+        AuthService2[Authorization Service]
+        SecurityConfig[Security Configuration]
+        UserDetailsService[User Details Service]
+    end
+
+    %% External Services
+    subgraph "External Service Layer"
+        EmailService[Email Service]
+        SMSService[SMS Service]
+        PaymentGateway[Payment Gateway]
+        CreditCheck[Credit Check Service]
+        RegulatoryAPI[Regulatory Reporting API]
+    end
+
+    %% Infrastructure Layer
+    subgraph "Infrastructure Layer"
+        subgraph "Database"
+            PostgreSQL[(PostgreSQL Database)]
+            RedisCache[(Redis Cache)]
+        end
+        
+        subgraph "Message Queue"
+            MessageBroker[Message Broker]
+            EventPublisher[Event Publisher]
+        end
+        
+        subgraph "Monitoring & Logging"
+            LoggingService[Logging Service]
+            MetricsCollector[Metrics Collector]
+            HealthCheck[Health Check]
+        end
+        
+        subgraph "Configuration"
+            ConfigServer[Configuration Server]
+            EnvironmentConfig[Environment Configuration]
+        end
+    end
+
+    %% Utility Components
+    subgraph "Utility Layer"
+        AccountNumberGen[Account Number Generator]
+        TransactionIdGen[Transaction ID Generator]
+        PasswordEncoder[Password Encoder]
+        ValidationUtil[Validation Utilities]
+        DateTimeUtil[DateTime Utilities]
+        CurrencyUtil[Currency Utilities]
+        EncryptionUtil[Encryption Utilities]
+    end
+
+    %% Event System
+    subgraph "Event Processing Layer"
+        EventListener[Event Listeners]
+        AccountEventListener[Account Event Listener]
+        TransactionEventListener[Transaction Event Listener]
+        SecurityEventListener[Security Event Listener]
+        NotificationObserver[Notification Observers]
+    end
+
+    %% Scheduled Services
+    subgraph "Scheduled Services"
+        InterestScheduler[Interest Calculation Scheduler]
+        FeeScheduler[Monthly Fee Scheduler]
+        ReportScheduler[Report Generation Scheduler]
+        MaintenanceScheduler[Database Maintenance Scheduler]
+    end
+
+    %% Component Relationships - External to API Gateway
+    MobileApp --> LoadBalancer
+    WebPortal --> LoadBalancer
+    ATM --> LoadBalancer
+    AdminPanel --> LoadBalancer
+    
+    LoadBalancer --> APIGateway
+    APIGateway --> SecurityFilter
+    
+    %% Security Filter to Controllers
+    SecurityFilter --> AccountController
+    SecurityFilter --> CustomerController
+    SecurityFilter --> TransactionController
+    SecurityFilter --> AuthController
+    SecurityFilter --> EmployeeController
+    SecurityFilter --> ReportController
+    SecurityFilter --> NotificationController
+    
+    %% Controllers to Services
+    AccountController --> AccountService
+    CustomerController --> CustomerService
+    TransactionController --> TransactionService
+    AuthController --> AuthService
+    EmployeeController --> CustomerService
+    ReportController --> ReportService
+    NotificationController --> NotificationService
+    
+    %% Core Service Dependencies
+    AccountService --> AccountRepo
+    AccountService --> AccountFactory
+    AccountService --> InterestService
+    AccountService --> FeeService
+    AccountService --> AuditService
+    
+    CustomerService --> CustomerRepo
+    CustomerService --> AuditService
+    CustomerService --> RiskService
+    
+    TransactionService --> TransactionRepo
+    TransactionService --> AccountRepo
+    TransactionService --> TransactionFactory
+    TransactionService --> FeeService
+    TransactionService --> AuditService
+    TransactionService --> NotificationService
+    
+    AuthService --> UserRepo
+    AuthService --> JWTProvider
+    AuthService --> PasswordEncoder
+    AuthService --> AuditService
+    
+    NotificationService --> NotificationFactory
+    NotificationService --> EmailService
+    NotificationService --> SMSService
+    NotificationService --> NotificationStrategy
+    
+    %% Repository to Database
+    AccountRepo --> PostgreSQL
+    CustomerRepo --> PostgreSQL
+    TransactionRepo --> PostgreSQL
+    UserRepo --> PostgreSQL
+    AuditRepo --> PostgreSQL
+    
+    CustomAccountRepo --> PostgreSQL
+    CustomTransactionRepo --> PostgreSQL
+    
+    %% Cache Dependencies
+    AccountService --> RedisCache
+    CustomerService --> RedisCache
+    AuthService --> RedisCache
+    
+    %% Factory Dependencies
+    AccountFactory --> SavingsAccount
+    AccountFactory --> CheckingAccount
+    AccountFactory --> BusinessAccount
+    
+    TransactionFactory --> DepositTxn
+    TransactionFactory --> WithdrawalTxn
+    TransactionFactory --> TransferTxn
+    
+    %% Strategy Dependencies
+    InterestService --> InterestStrategy
+    FeeService --> FeeStrategy
+    
+    %% Security Layer Dependencies
+    AuthFilter --> JWTProvider
+    AuthFilter --> UserDetailsService
+    SecurityConfig --> AuthFilter
+    SecurityConfig --> AuthService2
+    
+    UserDetailsService --> UserRepo
+    JWTProvider --> SecurityConfig
+    
+    %% Entity Relationships
+    Person --> Customer
+    Person --> BankEmployee
+    BankEmployee --> Teller
+    BankEmployee --> BranchManager
+    
+    Account --> SavingsAccount
+    Account --> CheckingAccount
+    Account --> BusinessAccount
+    
+    Transaction --> DepositTxn
+    Transaction --> WithdrawalTxn
+    Transaction --> TransferTxn
+    
+    %% Value Object Usage
+    Customer --> Address
+    Customer --> ContactInfo
+    Account --> Money
+    Transaction --> TransactionResult
+    Transaction --> AuditTrail
+    
+    User --> Role
+    Role --> Permission
+    
+    %% Event System
+    TransactionService --> EventPublisher
+    AccountService --> EventPublisher
+    
+    EventPublisher --> MessageBroker
+    MessageBroker --> EventListener
+    
+    EventListener --> AccountEventListener
+    EventListener --> TransactionEventListener
+    EventListener --> SecurityEventListener
+    
+    AccountEventListener --> NotificationService
+    TransactionEventListener --> NotificationService
+    SecurityEventListener --> AuditService
+    
+    NotificationService --> NotificationObserver
+    
+    %% External Service Dependencies
+    NotificationService --> EmailService
+    NotificationService --> SMSService
+    TransactionService --> PaymentGateway
+    CustomerService --> CreditCheck
+    ComplianceService --> RegulatoryAPI
+    
+    %% Scheduled Services
+    InterestScheduler --> InterestService
+    FeeScheduler --> FeeService
+    ReportScheduler --> ReportService
+    MaintenanceScheduler --> PostgreSQL
+    
+    %% Utility Dependencies
+    AccountService --> AccountNumberGen
+    TransactionService --> TransactionIdGen
+    AuthService --> PasswordEncoder
+    AccountService --> ValidationUtil
+    TransactionService --> DateTimeUtil
+    TransactionService --> CurrencyUtil
+    AuditService --> EncryptionUtil
+    
+    %% Monitoring Dependencies
+    AccountService --> LoggingService
+    TransactionService --> LoggingService
+    AuthService --> LoggingService
+    
+    AccountService --> MetricsCollector
+    TransactionService --> MetricsCollector
+    
+    HealthCheck --> PostgreSQL
+    HealthCheck --> RedisCache
+    
+    %% Configuration Dependencies
+    SecurityConfig --> ConfigServer
+    DatabaseConfig --> EnvironmentConfig
+    
+    %% Third Party Integration
+    ThirdParty --> APIGateway
+    PaymentGateway --> ThirdParty
+    CreditCheck --> ThirdParty
+    EmailService --> ThirdParty
+    SMSService --> ThirdParty
+
+    %% Styling
+    classDef external fill:#e1f5fe
+    classDef controller fill:#f3e5f5
+    classDef service fill:#e8f5e8
+    classDef repository fill:#fff3e0
+    classDef entity fill:#fce4ec
+    classDef security fill:#ffebee
+    classDef infrastructure fill:#f1f8e9
+    classDef utility fill:#f9fbe7
+    classDef event fill:#e0f2f1
+    
+    class MobileApp,WebPortal,ATM,AdminPanel,ThirdParty external
+    class AccountController,CustomerController,TransactionController,AuthController,EmployeeController,ReportController,NotificationController controller
+    class AccountService,CustomerService,TransactionService,AuthService,NotificationService,ReportService,InterestService,FeeService,AuditService,RiskService,ComplianceService service
+    class AccountRepo,CustomerRepo,TransactionRepo,UserRepo,AuditRepo,CustomAccountRepo,CustomTransactionRepo repository
+    class Person,Customer,BankEmployee,Teller,BranchManager,Account,SavingsAccount,CheckingAccount,Transaction,User,Role,Permission entity
+    class JWTProvider,AuthFilter,SecurityConfig,UserDetailsService,AuthService2 security
+    class PostgreSQL,RedisCache,MessageBroker,LoggingService,MetricsCollector,ConfigServer infrastructure
+    class AccountNumberGen,TransactionIdGen,PasswordEncoder,ValidationUtil,DateTimeUtil,CurrencyUtil,EncryptionUtil utility
+    class EventListener,EventPublisher,AccountEventListener,TransactionEventListener,SecurityEventListener,NotificationObserver event
