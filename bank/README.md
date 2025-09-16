@@ -2,559 +2,303 @@
 
 ```
 banking-system/
-├── .github/                          # GitHub-specific configurations
-├── .gitignore                        # Git ignore rules
-├── README.md                         # Project documentation
-├── CHANGELOG.md                      # Version change history
-├── CONTRIBUTING.md                   # Contribution guidelines
-├── LICENSE                           # Software license
+│
+├── 📁 Root Configuration Files
+├── .gitignore                        # Git exclusions for build artifacts, logs, IDE files
+├── README.md                         # Project overview, setup instructions, API docs
+├── CHANGELOG.md                      # Version history and release notes
+├── CONTRIBUTING.md                   # Developer contribution guidelines
+├── LICENSE                           # Software license (MIT/Apache)
+├── build.gradle                      # Gradle build config, dependencies, plugins
+├── gradle.properties                 # Gradle settings (JVM opts, proxy settings)
+├── gradlew / gradlew.bat             # Gradle wrapper scripts (Unix/Windows)
+├── settings.gradle                   # Multi-project build settings
 ├── .env.example                      # Environment variables template
-├── build.gradle                      # Gradle build configuration
-├── gradle.properties                 # Gradle properties
-├── gradlew                          # Gradle wrapper script (Unix)
-├── gradlew.bat                      # Gradle wrapper script (Windows)
-├── settings.gradle                   # Gradle settings
-├── docker/                          # Docker-related files
-├── docs/                            # Project documentation
-├── scripts/                         # Utility scripts
-├── gradle/                          # Gradle wrapper files
-└── src/                             # Source code directory
-    ├── main/                        # Main application code
-    │   ├── java/                    # Java source files
-    │   └── resources/               # Configuration & static files
-    └── test/                        # Test code
-        ├── java/                    # Test source files
-        └── resources/               # Test configuration files
-
-banking-system/
 │
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/
-│   │   │       └── bankingsystem/
-│   │   │           ├── BankingSystemApplication.java
-│   │   │           │
-│   │   │           ├── config/
-│   │   │           │   ├── DatabaseConfig.java
-│   │   │           │   ├── SecurityConfig.java
-│   │   │           │   ├── RedisConfig.java
-│   │   │           │   ├── SwaggerConfig.java
-│   │   │           │   ├── JpaConfig.java
-│   │   │           │   ├── AsyncConfig.java
-│   │   │           │   └── CorsConfig.java
-│   │   │           │
-│   │   │           ├── controller/
-│   │   │           │   ├── api/
-│   │   │           │   │   ├── v1/
-│   │   │           │   │   │   ├── AccountController.java
-│   │   │           │   │   │   ├── CustomerController.java
-│   │   │           │   │   │   ├── TransactionController.java
-│   │   │           │   │   │   ├── BranchController.java
-│   │   │           │   │   │   ├── EmployeeController.java
-│   │   │           │   │   │   ├── AuthController.java
-│   │   │           │   │   │   ├── NotificationController.java
-│   │   │           │   │   │   └── ReportController.java
-│   │   │           │   │   └── v2/
-│   │   │           │   │       └── [Future API versions]
-│   │   │           │   ├── web/
-│   │   │           │   │   ├── BankingWebController.java
-│   │   │           │   │   ├── DashboardController.java
-│   │   │           │   │   └── AdminController.java
-│   │   │           │   └── advice/
-│   │   │           │       ├── GlobalExceptionHandler.java
-│   │   │           │       └── ApiResponseAdvice.java
-│   │   │           │
-│   │   │           ├── dto/
-│   │   │           │   ├── request/
-│   │   │           │   │   ├── account/
-│   │   │           │   │   │   ├── CreateAccountRequest.java
-│   │   │           │   │   │   ├── DepositRequest.java
-│   │   │           │   │   │   ├── WithdrawRequest.java
-│   │   │           │   │   │   └── TransferRequest.java
-│   │   │           │   │   ├── customer/
-│   │   │           │   │   │   ├── CreateCustomerRequest.java
-│   │   │           │   │   │   ├── UpdateCustomerRequest.java
-│   │   │           │   │   │   └── CustomerSearchRequest.java
-│   │   │           │   │   ├── transaction/
-│   │   │           │   │   │   ├── TransactionSearchRequest.java
-│   │   │           │   │   │   └── BulkTransactionRequest.java
-│   │   │           │   │   ├── auth/
-│   │   │           │   │   │   ├── LoginRequest.java
-│   │   │           │   │   │   ├── RegisterRequest.java
-│   │   │           │   │   │   └── ChangePasswordRequest.java
-│   │   │           │   │   └── employee/
-│   │   │           │   │       ├── CreateEmployeeRequest.java
-│   │   │           │   │       └── UpdateEmployeeRequest.java
-│   │   │           │   │
-│   │   │           │   ├── response/
-│   │   │           │   │   ├── account/
-│   │   │           │   │   │   ├── AccountResponse.java
-│   │   │           │   │   │   ├── BalanceResponse.java
-│   │   │           │   │   │   └── AccountSummaryResponse.java
-│   │   │           │   │   ├── customer/
-│   │   │           │   │   │   ├── CustomerResponse.java
-│   │   │           │   │   │   ├── CustomerProfileResponse.java
-│   │   │           │   │   │   └── CustomerListResponse.java
-│   │   │           │   │   ├── transaction/
-│   │   │           │   │   │   ├── TransactionResponse.java
-│   │   │           │   │   │   ├── TransactionHistoryResponse.java
-│   │   │           │   │   │   └── TransactionResultResponse.java
-│   │   │           │   │   ├── auth/
-│   │   │           │   │   │   ├── LoginResponse.java
-│   │   │           │   │   │   ├── TokenResponse.java
-│   │   │           │   │   │   └── UserProfileResponse.java
-│   │   │           │   │   ├── common/
-│   │   │           │   │   │   ├── ApiResponse.java
-│   │   │           │   │   │   ├── PagedResponse.java
-│   │   │           │   │   │   └── ErrorResponse.java
-│   │   │           │   │   └── report/
-│   │   │           │   │       ├── BranchReportResponse.java
-│   │   │           │   │       ├── CustomerReportResponse.java
-│   │   │           │   │       └── TransactionReportResponse.java
-│   │   │           │   │
-│   │   │           │   └── mapper/
-│   │   │           │       ├── AccountMapper.java
-│   │   │           │       ├── CustomerMapper.java
-│   │   │           │       ├── TransactionMapper.java
-│   │   │           │       ├── EmployeeMapper.java
-│   │   │           │       └── BranchMapper.java
-│   │   │           │
-│   │   │           ├── entity/
-│   │   │           │   ├── base/
-│   │   │           │   │   ├── BaseEntity.java
-│   │   │           │   │   ├── AuditableEntity.java
-│   │   │           │   │   └── SoftDeleteEntity.java
-│   │   │           │   │
-│   │   │           │   ├── person/
-│   │   │           │   │   ├── Person.java
-│   │   │           │   │   ├── Customer.java
-│   │   │           │   │   ├── BankEmployee.java
-│   │   │           │   │   ├── Teller.java
-│   │   │           │   │   ├── BranchManager.java
-│   │   │           │   │   └── LoanOfficer.java
-│   │   │           │   │
-│   │   │           │   ├── account/
-│   │   │           │   │   ├── Account.java
-│   │   │           │   │   ├── SavingsAccount.java
-│   │   │           │   │   ├── CheckingAccount.java
-│   │   │           │   │   ├── BusinessAccount.java
-│   │   │           │   │   └── AccountStatusHistory.java
-│   │   │           │   │
-│   │   │           │   ├── transaction/
-│   │   │           │   │   ├── Transaction.java
-│   │   │           │   │   ├── DepositTransaction.java
-│   │   │           │   │   ├── WithdrawalTransaction.java
-│   │   │           │   │   ├── TransferTransaction.java
-│   │   │           │   │   └── TransactionAudit.java
-│   │   │           │   │
-│   │   │           │   ├── branch/
-│   │   │           │   │   ├── Bank.java
-│   │   │           │   │   ├── Branch.java
-│   │   │           │   │   └── BranchSchedule.java
-│   │   │           │   │
-│   │   │           │   ├── security/
-│   │   │           │   │   ├── User.java
-│   │   │           │   │   ├── Role.java
-│   │   │           │   │   ├── Permission.java
-│   │   │           │   │   ├── UserSession.java
-│   │   │           │   │   └── AuditLog.java
-│   │   │           │   │
-│   │   │           │   ├── notification/
-│   │   │           │   │   ├── Notification.java
-│   │   │           │   │   ├── NotificationTemplate.java
-│   │   │           │   │   └── NotificationHistory.java
-│   │   │           │   │
-│   │   │           │   └── valueobject/
-│   │   │           │       ├── Address.java
-│   │   │           │       ├── ContactInfo.java
-│   │   │           │       ├── Money.java
-│   │   │           │       └── DateRange.java
-│   │   │           │
-│   │   │           ├── repository/
-│   │   │           │   ├── person/
-│   │   │           │   │   ├── CustomerRepository.java
-│   │   │           │   │   ├── EmployeeRepository.java
-│   │   │           │   │   ├── TellerRepository.java
-│   │   │           │   │   └── BranchManagerRepository.java
-│   │   │           │   │
-│   │   │           │   ├── account/
-│   │   │           │   │   ├── AccountRepository.java
-│   │   │           │   │   ├── SavingsAccountRepository.java
-│   │   │           │   │   ├── CheckingAccountRepository.java
-│   │   │           │   │   └── BusinessAccountRepository.java
-│   │   │           │   │
-│   │   │           │   ├── transaction/
-│   │   │           │   │   ├── TransactionRepository.java
-│   │   │           │   │   ├── DepositTransactionRepository.java
-│   │   │           │   │   ├── WithdrawalTransactionRepository.java
-│   │   │           │   │   └── TransferTransactionRepository.java
-│   │   │           │   │
-│   │   │           │   ├── branch/
-│   │   │           │   │   ├── BankRepository.java
-│   │   │           │   │   └── BranchRepository.java
-│   │   │           │   │
-│   │   │           │   ├── security/
-│   │   │           │   │   ├── UserRepository.java
-│   │   │           │   │   ├── RoleRepository.java
-│   │   │           │   │   └── PermissionRepository.java
-│   │   │           │   │
-│   │   │           │   ├── notification/
-│   │   │           │   │   ├── NotificationRepository.java
-│   │   │           │   │   └── NotificationTemplateRepository.java
-│   │   │           │   │
-│   │   │           │   └── custom/
-│   │   │           │       ├── CustomAccountRepository.java
-│   │   │           │       ├── CustomTransactionRepository.java
-│   │   │           │       ├── impl/
-│   │   │           │       │   ├── CustomAccountRepositoryImpl.java
-│   │   │           │       │   └── CustomTransactionRepositoryImpl.java
-│   │   │           │       └── specifications/
-│   │   │           │           ├── AccountSpecifications.java
-│   │   │           │           ├── CustomerSpecifications.java
-│   │   │           │           └── TransactionSpecifications.java
-│   │   │           │
-│   │   │           ├── service/
-│   │   │           │   ├── interfaces/
-│   │   │           │   │   ├── IAccountService.java
-│   │   │           │   │   ├── ICustomerService.java
-│   │   │           │   │   ├── ITransactionService.java
-│   │   │           │   │   ├── IAuthenticationService.java
-│   │   │           │   │   ├── INotificationService.java
-│   │   │           │   │   ├── IBankingReportService.java
-│   │   │           │   │   ├── IInterestCalculator.java
-│   │   │           │   │   ├── IFeeCalculator.java
-│   │   │           │   │   └── IAuditService.java
-│   │   │           │   │
-│   │   │           │   ├── impl/
-│   │   │           │   │   ├── AccountServiceImpl.java
-│   │   │           │   │   ├── CustomerServiceImpl.java
-│   │   │           │   │   ├── TransactionServiceImpl.java
-│   │   │           │   │   ├── AuthenticationServiceImpl.java
-│   │   │           │   │   ├── NotificationServiceImpl.java
-│   │   │           │   │   ├── BankingReportServiceImpl.java
-│   │   │           │   │   ├── SimpleInterestCalculatorImpl.java
-│   │   │           │   │   ├── CompoundInterestCalculatorImpl.java
-│   │   │           │   │   ├── TieredFeeCalculatorImpl.java
-│   │   │           │   │   └── AuditServiceImpl.java
-│   │   │           │   │
-│   │   │           │   ├── factory/
-│   │   │           │   │   ├── AccountFactory.java
-│   │   │           │   │   ├── SavingsAccountFactory.java
-│   │   │           │   │   ├── CheckingAccountFactory.java
-│   │   │           │   │   ├── BusinessAccountFactory.java
-│   │   │           │   │   ├── TransactionFactory.java
-│   │   │           │   │   └── NotificationFactory.java
-│   │   │           │   │
-│   │   │           │   ├── strategy/
-│   │   │           │   │   ├── interest/
-│   │   │           │   │   │   ├── InterestCalculationStrategy.java
-│   │   │           │   │   │   ├── SimpleInterestStrategy.java
-│   │   │           │   │   │   ├── CompoundInterestStrategy.java
-│   │   │           │   │   │   └── TieredInterestStrategy.java
-│   │   │           │   │   │
-│   │   │           │   │   ├── fee/
-│   │   │           │   │   │   ├── FeeCalculationStrategy.java
-│   │   │           │   │   │   ├── StandardFeeStrategy.java
-│   │   │           │   │   │   ├── PremiumFeeStrategy.java
-│   │   │           │   │   │   └── VipFeeStrategy.java
-│   │   │           │   │   │
-│   │   │           │   │   └── notification/
-│   │   │           │   │       ├── NotificationStrategy.java
-│   │   │           │   │       ├── EmailNotificationStrategy.java
-│   │   │           │   │       ├── SmsNotificationStrategy.java
-│   │   │           │   │       └── PushNotificationStrategy.java
-│   │   │           │   │
-│   │   │           │   └── external/
-│   │   │           │       ├── EmailService.java
-│   │   │           │       ├── SmsService.java
-│   │   │           │       ├── PaymentGatewayService.java
-│   │   │           │       └── CreditCheckService.java
-│   │   │           │
-│   │   │           ├── security/
-│   │   │           │   ├── jwt/
-│   │   │           │   │   ├── JwtTokenProvider.java
-│   │   │           │   │   ├── JwtAuthenticationEntryPoint.java
-│   │   │           │   │   ├── JwtAuthenticationFilter.java
-│   │   │           │   │   └── JwtTokenValidator.java
-│   │   │           │   │
-│   │   │           │   ├── userdetails/
-│   │   │           │   │   ├── CustomUserDetails.java
-│   │   │           │   │   └── CustomUserDetailsService.java
-│   │   │           │   │
-│   │   │           │   └── authorization/
-│   │   │           │       ├── MethodSecurityService.java
-│   │   │           │       └── ResourceAccessService.java
-│   │   │           │
-│   │   │           ├── validation/
-│   │   │           │   ├── annotations/
-│   │   │           │   │   ├── ValidAccountNumber.java
-│   │   │           │   │   ├── ValidCustomerId.java
-│   │   │           │   │   ├── ValidAmount.java
-│   │   │           │   │   ├── ValidPhoneNumber.java
-│   │   │           │   │   └── ValidEmail.java
-│   │   │           │   │
-│   │   │           │   └── validators/
-│   │   │           │       ├── AccountNumberValidator.java
-│   │   │           │       ├── CustomerIdValidator.java
-│   │   │           │       ├── AmountValidator.java
-│   │   │           │       ├── PhoneNumberValidator.java
-│   │   │           │       └── EmailValidator.java
-│   │   │           │
-│   │   │           ├── exception/
-│   │   │           │   ├── BankingException.java
-│   │   │           │   ├── AccountNotFoundException.java
-│   │   │           │   ├── CustomerNotFoundException.java
-│   │   │           │   ├── InsufficientFundsException.java
-│   │   │           │   ├── InvalidTransactionException.java
-│   │   │           │   ├── AccountFrozenException.java
-│   │   │           │   ├── DailyLimitExceededException.java
-│   │   │           │   ├── UnauthorizedAccessException.java
-│   │   │           │   └── BusinessValidationException.java
-│   │   │           │
-│   │   │           ├── util/
-│   │   │           │   ├── AccountNumberGenerator.java
-│   │   │           │   ├── TransactionIdGenerator.java
-│   │   │           │   ├── PasswordEncoder.java
-│   │   │           │   ├── DateTimeUtil.java
-│   │   │           │   ├── CurrencyUtil.java
-│   │   │           │   ├── ValidationUtil.java
-│   │   │           │   ├── EncryptionUtil.java
-│   │   │           │   └── ReportUtil.java
-│   │   │           │
-│   │   │           ├── constants/
-│   │   │           │   ├── AppConstants.java
-│   │   │           │   ├── SecurityConstants.java
-│   │   │           │   ├── ErrorConstants.java
-│   │   │           │   ├── ApiConstants.java
-│   │   │           │   └── DatabaseConstants.java
-│   │   │           │
-│   │   │           ├── enums/
-│   │   │           │   ├── AccountStatus.java
-│   │   │           │   ├── AccountType.java
-│   │   │           │   ├── TransactionType.java
-│   │   │           │   ├── TransactionStatus.java
-│   │   │           │   ├── CustomerType.java
-│   │   │           │   ├── EmployeePosition.java
-│   │   │           │   ├── NotificationType.java
-│   │   │           │   ├── Currency.java
-│   │   │           │   └── RiskLevel.java
-│   │   │           │
-│   │   │           ├── event/
-│   │   │           │   ├── BankingEvent.java
-│   │   │           │   ├── AccountCreatedEvent.java
-│   │   │           │   ├── TransactionCompletedEvent.java
-│   │   │           │   ├── CustomerRegisteredEvent.java
-│   │   │           │   ├── LowBalanceEvent.java
-│   │   │           │   └── SuspiciousActivityEvent.java
-│   │   │           │
-│   │   │           ├── listener/
-│   │   │           │   ├── AccountEventListener.java
-│   │   │           │   ├── TransactionEventListener.java
-│   │   │           │   ├── CustomerEventListener.java
-│   │   │           │   └── SecurityEventListener.java
-│   │   │           │
-│   │   │           ├── scheduler/
-│   │   │           │   ├── InterestCalculationScheduler.java
-│   │   │           │   ├── MonthlyFeeScheduler.java
-│   │   │           │   ├── ReportGenerationScheduler.java
-│   │   │           │   └── DatabaseMaintenanceScheduler.java
-│   │   │           │
-│   │   │           ├── async/
-│   │   │           │   ├── AsyncTransactionProcessor.java
-│   │   │           │   ├── AsyncNotificationSender.java
-│   │   │           │   └── AsyncReportGenerator.java
-│   │   │           │
-│   │   │           └── cache/
-│   │   │               ├── CacheService.java
-│   │   │               ├── AccountCacheService.java
-│   │   │               ├── CustomerCacheService.java
-│   │   │               └── RedisCacheService.java
-│   │   │
-│   │   └── resources/
-│   │       ├── application.yml
-│   │       ├── application-dev.yml
-│   │       ├── application-test.yml
-│   │       ├── application-prod.yml
-│   │       │
-│   │       ├── db/
-│   │       │   ├── migration/
-│   │       │   │   ├── V1__Create_initial_tables.sql
-│   │       │   │   ├── V2__Add_person_hierarchy.sql
-│   │       │   │   ├── V3__Add_account_tables.sql
-│   │       │   │   ├── V4__Add_transaction_tables.sql
-│   │       │   │   ├── V5__Add_security_tables.sql
-│   │       │   │   ├── V6__Add_notification_tables.sql
-│   │       │   │   ├── V7__Add_indexes.sql
-│   │       │   │   └── V8__Add_constraints.sql
-│   │       │   │
-│   │       │   └── seeds/
-│   │       │       ├── dev/
-│   │       │       │   ├── banks.sql
-│   │       │       │   ├── branches.sql
-│   │       │       │   ├── test_customers.sql
-│   │       │       │   └── test_accounts.sql
-│   │       │       └── prod/
-│   │       │           ├── banks.sql
-│   │       │           └── branches.sql
-│   │       │
-│   │       ├── templates/
-│   │       │   ├── email/
-│   │       │   │   ├── welcome.html
-│   │       │   │   ├── transaction-notification.html
-│   │       │   │   ├── password-reset.html
-│   │       │   │   └── monthly-statement.html
-│   │       │   └── reports/
-│   │       │       ├── branch-report.html
-│   │       │       ├── customer-report.html
-│   │       │       └── transaction-report.html
-│   │       │
-│   │       ├── static/
-│   │       │   ├── css/
-│   │       │   │   ├── admin.css
-│   │       │   │   └── reports.css
-│   │       │   ├── js/
-│   │       │   │   ├── dashboard.js
-│   │       │   │   └── reports.js
-│   │       │   └── images/
-│   │       │       ├── bank-logo.png
-│   │       │       └── icons/
-│   │       │           ├── account.svg
-│   │       │           ├── transaction.svg
-│   │       │           └── customer.svg
-│   │       │
-│   │       ├── i18n/
-│   │       │   ├── messages_en.properties
-│   │       │   ├── messages_es.properties
-│   │       │   └── messages_fr.properties
-│   │       │
-│   │       └── logback-spring.xml
-│   │
-│   └── test/
-│       ├── java/
-│       │   └── com/
-│       │       └── bankingsystem/
-│       │           ├── BankingSystemApplicationTests.java
-│       │           │
-│       │           ├── controller/
-│       │           │   ├── AccountControllerTest.java
-│       │           │   ├── CustomerControllerTest.java
-│       │           │   ├── TransactionControllerTest.java
-│       │           │   └── AuthControllerTest.java
-│       │           │
-│       │           ├── service/
-│       │           │   ├── AccountServiceTest.java
-│       │           │   ├── CustomerServiceTest.java
-│       │           │   ├── TransactionServiceTest.java
-│       │           │   ├── AuthenticationServiceTest.java
-│       │           │   └── NotificationServiceTest.java
-│       │           │
-│       │           ├── repository/
-│       │           │   ├── AccountRepositoryTest.java
-│       │           │   ├── CustomerRepositoryTest.java
-│       │           │   └── TransactionRepositoryTest.java
-│       │           │
-│       │           ├── integration/
-│       │           │   ├── AccountIntegrationTest.java
-│       │           │   ├── TransactionIntegrationTest.java
-│       │           │   └── SecurityIntegrationTest.java
-│       │           │
-│       │           ├── util/
-│       │           │   ├── TestDataBuilder.java
-│       │           │   ├── TestUtil.java
-│       │           │   └── MockDataProvider.java
-│       │           │
-│       │           └── security/
-│       │               ├── JwtTokenProviderTest.java
-│       │               └── SecurityConfigTest.java
-│       │
-│       └── resources/
-│           ├── application-test.yml
-│           ├── data.sql
-│           ├── schema.sql
-│           └── test-data/
-│               ├── customers.json
-│               ├── accounts.json
-│               └── transactions.json
-│
-├── docs/
-│   ├── api/
-│   │   ├── swagger.yml
-│   │   ├── postman_collection.json
-│   │   └── api-documentation.md
-│   │
-│   ├── architecture/
-│   │   ├── system-design.md
-│   │   ├── database-schema.md
-│   │   ├── class-diagrams.md
-│   │   └── sequence-diagrams.md
-│   │
-│   ├── deployment/
-│   │   ├── docker-compose.yml
-│   │   ├── kubernetes/
-│   │   │   ├── deployment.yml
-│   │   │   ├── service.yml
-│   │   │   └── configmap.yml
-│   │   └── aws/
-│   │       ├── cloudformation.yml
-│   │       └── terraform/
-│   │           ├── main.tf
-│   │           ├── variables.tf
-│   │           └── outputs.tf
-│   │
-│   └── guides/
-│       ├── getting-started.md
-│       ├── development-setup.md
-│       ├── testing-guide.md
-│       └── deployment-guide.md
-│
-├── scripts/
-│   ├── build.sh
-│   ├── deploy.sh
-│   ├── setup-dev.sh
-│   ├── run-tests.sh
-│   ├── database/
-│   │   ├── init-db.sh
-│   │   ├── backup-db.sh
-│   │   └── restore-db.sh
-│   └── monitoring/
-│       ├── health-check.sh
-│       └── performance-test.sh
-│
-├── docker/
-│   ├── Dockerfile
-│   ├── docker-compose.yml
-│   ├── docker-compose.dev.yml
-│   ├── docker-compose.prod.yml
-│   └── nginx/
-│       ├── nginx.conf
-│       └── ssl/
-│           ├── cert.pem
-│           └── key.pem
-│
-├── .github/
+├── 📁 GitHub CI/CD (.github/)
 │   └── workflows/
-│       ├── ci.yml
-│       ├── cd.yml
-│       ├── security-scan.yml
-│       └── code-quality.yml
+│       ├── ci.yml                    # Continuous Integration pipeline
+│       ├── cd.yml                    # Continuous Deployment pipeline
+│       ├── security-scan.yml         # OWASP security scanning
+│       └── code-quality.yml          # SonarQube code analysis
 │
-├── gradle/
-│   └── wrapper/
-│       ├── gradle-wrapper.jar
-│       └── gradle-wrapper.properties
+├── 📁 Docker & Infrastructure (docker/)
+│   ├── Dockerfile                    # Multi-stage Docker build
+│   ├── docker-compose.yml            # Local development environment
+│   ├── docker-compose.dev.yml        # Development with hot reload
+│   ├── docker-compose.prod.yml       # Production deployment
+│   └── nginx/                        # Load balancer configuration
+│       ├── nginx.conf                # Nginx reverse proxy config
+│       └── ssl/                      # SSL certificates
 │
-├── build.gradle
-├── gradle.properties
-├── gradlew
-├── gradlew.bat
-├── settings.gradle
-├── .gitignore
-├── README.md
-├── CHANGELOG.md
-├── CONTRIBUTING.md
-├── LICENSE
-└── .env.example
+├── 📁 Project Documentation (docs/)
+│   ├── api/                          # API documentation
+│   │   ├── swagger.yml               # OpenAPI 3.0 specification
+│   │   └── postman_collection.json   # API testing collection
+│   ├── architecture/                 # System design docs
+│   │   ├── system-design.md          # High-level architecture
+│   │   ├── database-schema.md        # Database design
+│   │   └── class-diagrams.md         # UML diagrams
+│   └── deployment/                   # DevOps documentation
+│       ├── kubernetes/               # K8s deployment configs
+│       └── terraform/                # Infrastructure as code
+│
+├── 📁 Utility Scripts (scripts/)
+│   ├── build.sh                      # Build automation
+│   ├── deploy.sh                     # Deployment automation
+│   ├── setup-dev.sh                  # Development environment setup
+│   └── database/                     # Database management scripts
+│       ├── init-db.sh                # Database initialization
+│       └── backup-db.sh              # Database backup
+│
+└── 📁 Source Code (src/)
+    ├── 📁 Main Application (main/)
+    │   ├── 📁 Java Source Code (java/com/bankingsystem/)
+    │   │   │
+    │   │   ├── 📄 BankingSystemApplication.java    # Spring Boot main class with @SpringBootApplication
+    │   │   │
+    │   │   ├── 📁 Configuration Layer (config/)
+    │   │   │   ├── DatabaseConfig.java            # HikariCP connection pool, JPA settings
+    │   │   │   ├── SecurityConfig.java            # Spring Security, JWT, CORS configuration
+    │   │   │   ├── RedisConfig.java               # Redis cache configuration
+    │   │   │   ├── SwaggerConfig.java             # OpenAPI documentation config
+    │   │   │   └── AsyncConfig.java               # Async processing configuration
+    │   │   │
+    │   │   ├── 📁 REST API Layer (controller/)
+    │   │   │   ├── api/v1/                        # REST endpoints version 1
+    │   │   │   │   ├── AccountController.java     # Account CRUD, balance, freeze/unfreeze
+    │   │   │   │   ├── CustomerController.java    # Customer registration, profile management
+    │   │   │   │   ├── TransactionController.java # Money transfers, transaction history
+    │   │   │   │   ├── AuthController.java        # Login, logout, token refresh
+    │   │   │   │   └── ReportController.java      # Financial reports, statements
+    │   │   │   ├── web/                           # Web UI controllers (if needed)
+    │   │   │   └── advice/                        # Global exception handling
+    │   │   │       └── GlobalExceptionHandler.java # Centralized error handling
+    │   │   │
+    │   │   ├── 📁 Data Transfer Objects (dto/)
+    │   │   │   ├── request/                       # API request DTOs
+    │   │   │   │   ├── account/                   # Account operation requests
+    │   │   │   │   │   ├── CreateAccountRequest.java    # New account creation
+    │   │   │   │   │   ├── DepositRequest.java          # Deposit money
+    │   │   │   │   │   ├── WithdrawRequest.java         # Withdraw money
+    │   │   │   │   │   └── TransferRequest.java         # Money transfer
+    │   │   │   │   ├── customer/                  # Customer operation requests
+    │   │   │   │   ├── transaction/               # Transaction queries
+    │   │   │   │   └── auth/                      # Authentication requests
+    │   │   │   ├── response/                      # API response DTOs
+    │   │   │   │   ├── account/                   # Account information responses
+    │   │   │   │   │   ├── AccountResponse.java         # Account details
+    │   │   │   │   │   └── BalanceResponse.java         # Balance information
+    │   │   │   │   ├── common/                    # Common response wrappers
+    │   │   │   │   │   ├── ApiResponse.java             # Standard API response wrapper
+    │   │   │   │   │   └── PagedResponse.java           # Paginated results
+    │   │   │   │   └── transaction/               # Transaction responses
+    │   │   │   └── mapper/                        # Entity ↔ DTO mappers
+    │   │   │       └── AccountMapper.java         # MapStruct account mapping
+    │   │   │
+    │   │   ├── 📁 Domain Entities (entity/)
+    │   │   │   ├── base/                          # Base entity classes
+    │   │   │   │   ├── BaseEntity.java                  # Common fields (ID, timestamps)
+    │   │   │   │   └── AuditableEntity.java             # Audit fields (created/modified by)
+    │   │   │   ├── person/                        # Person inheritance hierarchy
+    │   │   │   │   ├── Person.java                      # Abstract base person
+    │   │   │   │   ├── Customer.java                    # Bank customers
+    │   │   │   │   ├── BankEmployee.java                # Bank staff base
+    │   │   │   │   └── Teller.java                      # Bank tellers
+    │   │   │   ├── account/                       # Account inheritance hierarchy
+    │   │   │   │   ├── Account.java                     # Abstract base account
+    │   │   │   │   ├── SavingsAccount.java              # Savings account with interest
+    │   │   │   │   ├── CheckingAccount.java             # Checking account with overdraft
+    │   │   │   │   └── BusinessAccount.java             # Business account features
+    │   │   │   ├── transaction/                   # Transaction inheritance hierarchy
+    │   │   │   │   ├── Transaction.java                 # Abstract base transaction
+    │   │   │   │   ├── DepositTransaction.java          # Deposit operations
+    │   │   │   │   ├── WithdrawalTransaction.java       # Withdrawal operations
+    │   │   │   │   └── TransferTransaction.java         # Transfer operations
+    │   │   │   ├── security/                      # Security and user management
+    │   │   │   │   ├── User.java                        # System users
+    │   │   │   │   ├── Role.java                        # User roles
+    │   │   │   │   └── Permission.java                  # Access permissions
+    │   │   │   └── valueobject/                   # Value objects (immutable)
+    │   │   │       ├── Address.java                     # Address information
+    │   │   │       ├── ContactInfo.java                 # Contact details
+    │   │   │       └── Money.java                       # Money with currency
+    │   │   │
+    │   │   ├── 📁 Data Access Layer (repository/)
+    │   │   │   ├── account/                       # Account repositories
+    │   │   │   │   └── AccountRepository.java           # JPA repository + custom queries
+    │   │   │   ├── person/                        # Person repositories
+    │   │   │   │   └── CustomerRepository.java          # Customer data access
+    │   │   │   ├── transaction/                   # Transaction repositories
+    │   │   │   ├── security/                      # Security repositories
+    │   │   │   └── custom/                        # Custom repository implementations
+    │   │   │       └── specifications/            # JPA Criteria API specifications
+    │   │   │
+    │   │   ├── 📁 Business Logic Layer (service/)
+    │   │   │   ├── interfaces/                    # Service contracts
+    │   │   │   │   ├── IAccountService.java             # Account business operations
+    │   │   │   │   ├── ITransactionService.java         # Transaction processing
+    │   │   │   │   ├── IInterestCalculator.java         # Interest calculation
+    │   │   │   │   └── IAccountFactory.java             # Account creation factory
+    │   │   │   ├── impl/                          # Service implementations
+    │   │   │   │   ├── AccountServiceImpl.java          # Account business logic
+    │   │   │   │   ├── TransactionServiceImpl.java      # Transaction processing
+    │   │   │   │   ├── AsyncTransactionServiceImpl.java # Async transaction handling
+    │   │   │   │   ├── NotificationServiceImpl.java     # Notification handling
+    │   │   │   │   └── AuditServiceImpl.java            # Audit logging
+    │   │   │   ├── factory/                       # Factory pattern implementations
+    │   │   │   │   ├── AccountFactory.java              # Account creation factory
+    │   │   │   │   └── SavingsAccountFactory.java       # Savings account factory
+    │   │   │   └── strategy/                      # Strategy pattern implementations
+    │   │   │       ├── interest/                  # Interest calculation strategies
+    │   │   │       │   ├── InterestCalculationStrategy.java  # Strategy interface
+    │   │   │       │   ├── SimpleInterestStrategy.java       # Simple interest
+    │   │   │       │   └── CompoundInterestStrategy.java     # Compound interest
+    │   │   │       └── fee/                       # Fee calculation strategies
+    │   │   │
+    │   │   ├── 📁 Security Layer (security/)
+    │   │   │   ├── jwt/                           # JWT token management
+    │   │   │   │   ├── JwtTokenProvider.java            # Token generation/validation
+    │   │   │   │   └── JwtAuthenticationFilter.java     # JWT request filter
+    │   │   │   └── userdetails/                   # Spring Security integration
+    │   │   │       └── CustomUserDetailsService.java   # User loading for authentication
+    │   │   │
+    │   │   ├── 📁 Validation Layer (validation/)
+    │   │   │   ├── annotations/                   # Custom validation annotations
+    │   │   │   │   ├── ValidAccountNumber.java          # Account number format validation
+    │   │   │   │   └── ValidAmount.java                 # Money amount validation
+    │   │   │   └── validators/                    # Annotation implementations
+    │   │   │       └── AccountNumberValidator.java     # Account number validator logic
+    │   │   │
+    │   │   ├── 📁 Exception Handling (exception/)
+    │   │   │   ├── BankingException.java                # Base banking exception
+    │   │   │   ├── AccountNotFoundException.java        # Account not found
+    │   │   │   ├── InsufficientFundsException.java      # Insufficient balance
+    │   │   │   └── InvalidTransactionException.java     # Invalid transaction
+    │   │   │
+    │   │   ├── 📁 Utilities (util/)
+    │   │   │   ├── AccountNumberGenerator.java          # Unique account number generation
+    │   │   │   ├── TransactionIdGenerator.java          # Unique transaction ID generation
+    │   │   │   ├── DateTimeUtil.java                    # Date/time operations
+    │   │   │   └── ValidationUtil.java                  # Common validation methods
+    │   │   │
+    │   │   ├── 📁 Constants (constants/)
+    │   │   │   ├── AppConstants.java                    # Application constants
+    │   │   │   ├── SecurityConstants.java               # Security-related constants
+    │   │   │   └── ErrorConstants.java                  # Error codes and messages
+    │   │   │
+    │   │   ├── 📁 Enumerations (enums/)
+    │   │   │   ├── AccountStatus.java                   # ACTIVE, FROZEN, CLOSED, etc.
+    │   │   │   ├── AccountType.java                     # SAVINGS, CHECKING, BUSINESS
+    │   │   │   ├── TransactionType.java                 # DEPOSIT, WITHDRAWAL, TRANSFER
+    │   │   │   ├── TransactionStatus.java               # PENDING, COMPLETED, FAILED
+    │   │   │   ├── CustomerType.java                    # BASIC, PREMIUM, VIP, BUSINESS
+    │   │   │   ├── Currency.java                        # USD, EUR, GBP, etc.
+    │   │   │   ├── ContactMethod.java                   # EMAIL, PHONE, SMS
+    │   │   │   ├── EmployeePosition.java                # TELLER, MANAGER, OFFICER
+    │   │   │   └── RiskLevel.java                       # LOW, MEDIUM, HIGH, CRITICAL
+    │   │   │
+    │   │   ├── 📁 Event Handling (event/)
+    │   │   │   ├── BankingEvent.java                    # Base event class
+    │   │   │   ├── AccountCreatedEvent.java             # Account creation events
+    │   │   │   ├── TransactionCompletedEvent.java       # Transaction completion events
+    │   │   │   └── SuspiciousActivityEvent.java         # Fraud detection events
+    │   │   │
+    │   │   ├── 📁 Event Listeners (listener/)
+    │   │   │   ├── AccountEventListener.java            # Account event processing
+    │   │   │   ├── TransactionEventListener.java        # Transaction event processing
+    │   │   │   └── SecurityEventListener.java           # Security event processing
+    │   │   │
+    │   │   ├── 📁 Scheduled Tasks (scheduler/)
+    │   │   │   ├── InterestCalculationScheduler.java    # Daily interest calculation
+    │   │   │   ├── MonthlyFeeScheduler.java             # Monthly account fees
+    │   │   │   └── ReportGenerationScheduler.java       # Automated report generation
+    │   │   │
+    │   │   ├── 📁 Async Processing (async/)
+    │   │   │   ├── AsyncTransactionProcessor.java       # Background transaction processing
+    │   │   │   └── AsyncNotificationSender.java         # Background notification sending
+    │   │   │
+    │   │   └── 📁 Caching Layer (cache/)
+    │   │       ├── CacheService.java                    # Cache management
+    │   │       ├── AccountCacheService.java             # Account-specific caching
+    │   │       └── RedisCacheService.java               # Redis cache implementation
+    │   │
+    │   └── 📁 Application Resources (resources/)
+    │       ├── application.yml                          # Main Spring configuration
+    │       ├── application-dev.yml                      # Development environment config
+    │       ├── application-test.yml                     # Test environment config
+    │       ├── application-prod.yml                     # Production environment config
+    │       │
+    │       ├── db/migration/                            # Database schema migrations
+    │       │   ├── V1__Create_initial_tables.sql        # Initial database schema
+    │       │   ├── V2__Add_person_hierarchy.sql         # Person inheritance tables
+    │       │   ├── V3__Add_account_tables.sql           # Account hierarchy tables
+    │       │   ├── V4__Add_transaction_tables.sql       # Transaction tables
+    │       │   ├── V5__Add_security_tables.sql          # User/role security tables
+    │       │   └── V6__Add_indexes.sql                  # Performance indexes
+    │       │
+    │       ├── templates/                               # Email/report templates
+    │       │   ├── email/                               # Email notification templates
+    │       │   │   ├── welcome.html                     # Welcome email template
+    │       │   │   ├── transaction-notification.html    # Transaction alert template
+    │       │   │   └── password-reset.html              # Password reset template
+    │       │   └── reports/                             # Report templates
+    │       │       ├── account-statement.html           # Account statement template
+    │       │       └── transaction-report.html          # Transaction report template
+    │       │
+    │       ├── static/                                  # Static web resources
+    │       │   ├── css/                                 # Stylesheets for web UI
+    │       │   ├── js/                                  # JavaScript files
+    │       │   └── images/                              # Images and icons
+    │       │
+    │       ├── i18n/                                    # Internationalization
+    │       │   ├── messages_en.properties               # English messages
+    │       │   ├── messages_es.properties               # Spanish messages
+    │       │   └── messages_fr.properties               # French messages
+    │       │
+    │       └── logback-spring.xml                       # Logging configuration
+    │
+    └── 📁 Test Code (test/)
+        ├── 📁 Test Source Code (java/com/bankingsystem/)
+        │   ├── BankingSystemApplicationTests.java       # Integration test - Spring context loading
+        │   │
+        │   ├── controller/                              # Controller unit tests
+        │   │   ├── AccountControllerTest.java           # @WebMvcTest for account endpoints
+        │   │   ├── CustomerControllerTest.java          # @WebMvcTest for customer endpoints
+        │   │   └── TransactionControllerTest.java       # @WebMvcTest for transaction endpoints
+        │   │
+        │   ├── service/                                 # Service layer unit tests
+        │   │   ├── AccountServiceTest.java              # @ExtendWith(MockitoExtension) for account logic
+        │   │   ├── TransactionServiceTest.java          # @ExtendWith(MockitoExtension) for transaction logic
+        │   │   └── NotificationServiceTest.java         # @ExtendWith(MockitoExtension) for notifications
+        │   │
+        │   ├── repository/                              # Repository layer tests
+        │   │   ├── AccountRepositoryTest.java           # @DataJpaTest for account data access
+        │   │   ├── CustomerRepositoryTest.java          # @DataJpaTest for customer data access
+        │   │   └── TransactionRepositoryTest.java       # @DataJpaTest for transaction data access
+        │   │
+        │   ├── integration/                             # Full integration tests
+        │   │   ├── AccountIntegrationTest.java          # @SpringBootTest + @Testcontainers
+        │   │   ├── TransactionIntegrationTest.java      # @SpringBootTest + @Testcontainers
+        │   │   └── SecurityIntegrationTest.java         # @SpringBootTest + security tests
+        │   │
+        │   ├── util/                                    # Test utilities
+        │   │   ├── TestDataBuilder.java                 # Builder pattern for test data
+        │   │   ├── TestUtil.java                        # Common test helper methods
+        │   │   └── MockDataProvider.java                # Mock data generation
+        │   │
+        │   └── security/                                # Security component tests
+        │       ├── JwtTokenProviderTest.java            # JWT token generation/validation tests
+        │       └── SecurityConfigTest.java              # Security configuration tests
+        │
+        └── 📁 Test Resources (resources/)
+            ├── application-test.yml                     # Test environment configuration
+            ├── data.sql                                 # Test data insertion script
+            ├── schema.sql                               # Test database schema
+            └── test-data/                               # Test data files
+                ├── customers.json                       # Sample customer data
+                ├── accounts.json                        # Sample account data
+                └── transactions.json                    # Sample transaction data
 ```
 
 ## Key Features of This Structure:
